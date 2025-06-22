@@ -1,4 +1,4 @@
-# To add:
+# Additionals:
 
 serializer with hidding fields:
 
