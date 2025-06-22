@@ -8,20 +8,12 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         model = Student
         fields = [
             "id",
-            "profile_picture",
-            "name",
-            "institution",
-            "gender",
-            "email",
-            "phone_number",
-            "district",
-            "class_name",
+            ...
             "promo_code",
         ]
         read_only_fields = [
             "id",
-            "phone_number",
-            "email",
+            ...
             "promo_code",
         ]
 
