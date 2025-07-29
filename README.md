@@ -1,7 +1,8 @@
 # Additionals:
 
 Role based extended auth class:
-```
+
+```py
 # Authenticate User Only Class
 class AuthenticateOnlyStudent(BasePermission):
     def has_permission(self, request, view):
