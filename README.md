@@ -1,5 +1,22 @@
 # Additionals:
 
+Role based extended auth class:
+```
+# Authenticate User Only Class
+class AuthenticateOnlyStudent(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user or not request.user.is_authenticated:
+            raise PermissionDenied("User is not authenticated.")
+
+        if not getattr(request.user, "is_student", False):
+            raise PermissionDenied("User is not a Student.")
+
+        if not getattr(request.user.student_profile, "is_verified", False):
+            raise PermissionDenied("Student is not verified.")
+
+        return True
+```
+
 serializer with hidding fields:
 
 ```python
