@@ -72,3 +72,21 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 # usage
 serializer = StudentProfileSerializer(student, hide_fields=["promo_code"])
 ```
+
+
+Gzip response:
+```py
+from django.views.decorators.gzip import gzip_page
+from django.utils.decorators import method_decorator
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class MyDataView(APIView):
+    @method_decorator(gzip_page)
+    def get(self, request, *args, **kwargs):
+        data = {"message": "This response is GZipped only for GET requests"}
+        return Response(data)
+
+    def post(self, request, *args, **kwargs):
+        return Response({"message": "POST response (not gzipped)"})
+```
