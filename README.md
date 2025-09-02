@@ -1,5 +1,5 @@
 # Additionals:
-create an app ````python manage.py startapp app_name```
+create an app ```python manage.py startapp app_name```
 
 Custom paginator
 ```py
