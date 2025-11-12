@@ -1,6 +1,43 @@
 # Additionals:
 create an app ```python manage.py startapp app_name```
 
+`view.py`
+```py
+from django.shortcuts import render
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import BasePermission
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+from dj_rest_auth.registration.views import RegisterView
+from django.http import HttpResponse
+from django.utils import timezone
+from django.db import transaction
+from rest_framework.exceptions import ValidationError
+
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+
+# models
+from django.db.models import Sum, Q
+
+# serializers
+...
+
+
+class SomeView(APIView):
+    serializer_class = SomeSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+    ...
+```
+
+
+
 Custom paginator
 ```py
 class StandardResultsSetPagination(PageNumberPagination):
