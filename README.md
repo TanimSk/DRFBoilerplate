@@ -36,6 +36,17 @@ class SomeView(APIView):
     ...
 ```
 
+`urls.py`
+
+```py
+from django.urls import path
+from something.views import Something
+
+urlpatterns = [
+    path('something/', Something.as_view()),
+]
+```
+
 
 
 Custom paginator
