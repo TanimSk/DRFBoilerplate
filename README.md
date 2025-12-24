@@ -121,6 +121,64 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 serializer = StudentProfileSerializer(student, hide_fields=["promo_code"])
 ```
 
+`Registration Serializer`
+```py
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from rest_framework import serializers
+from myapp.models import MyModel
+
+# Custom Registration
+class AgentRegistrationSerializer(RegisterSerializer):
+    agent = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+    )  # by default allow_null = False
+    agency_name = serializers.CharField(required=True)
+    name = serializers.CharField(required=True)
+    mobile_no = serializers.IntegerField(required=True)
+    country = serializers.CharField(required=True)
+    city = serializers.CharField(required=True)
+    address = serializers.CharField(required=True)
+    logo = serializers.URLField(required=True)
+    trade_license = serializers.URLField(required=True)
+    national_id = serializers.URLField(required=True)
+
+    def get_cleaned_data(self):
+        data = super(AgentRegistrationSerializer, self).get_cleaned_data()
+        extra_data = {
+            "agency_name": self.validated_data.get("agency_name", ""),
+            "name": self.validated_data.get("name", ""),
+            "mobile_no": self.validated_data.get("mobile_no", ""),
+            "country": self.validated_data.get("country", ""),
+            "city": self.validated_data.get("city", ""),
+            "address": self.validated_data.get("address", ""),
+            "logo": self.validated_data.get("logo", ""),
+            "trade_license": self.validated_data.get("trade_license", ""),
+            "national_id": self.validated_data.get("national_id", ""),
+        }
+        data.update(extra_data)
+        return data
+
+    def save(self, request):
+        user = super(AgentRegistrationSerializer, self).save(request)
+        user.is_agent = True
+        user.first_name = self.cleaned_data.get("name")
+        user.save()
+        agent = Agent(
+            agent=user,
+            agency_name=self.cleaned_data.get("agency_name"),
+            name=self.cleaned_data.get("name"),
+            mobile_no=self.cleaned_data.get("mobile_no"),
+            country=self.cleaned_data.get("country"),
+            city=self.cleaned_data.get("city"),
+            address=self.cleaned_data.get("address"),
+            logo=self.cleaned_data.get("logo"),
+            trade_license=self.cleaned_data.get("trade_license"),
+            national_id=self.cleaned_data.get("national_id"),
+        )
+        agent.save()
+        return user
+```
+
 
 Gzip response:
 ```py
