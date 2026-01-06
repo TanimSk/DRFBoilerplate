@@ -16,3 +16,7 @@ weasyprint==65.1
 cloudinary==1.44.0
 python-dotenv==1.0.1
 setuptools==70.0.0
+# For WebSocket support
+daphne==4.1.2
+channels==4.2.0
+channels_redis==4.2.1
