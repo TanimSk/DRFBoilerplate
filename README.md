@@ -27,13 +27,17 @@ from django.db.models import Sum, Q
 # serializers
 ...
 
-
+# views
 class SomeView(APIView):
     serializer_class = SomeSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
     ...
+
+# registration
+class SomethingRegistrationView(RegisterView):
+    serializer_class = SomethingRegistrationSerializer
 ```
 
 `urls.py`
