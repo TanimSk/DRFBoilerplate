@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from dj_rest_auth.registration.views import LoginView
+from dj_rest_auth.registration.views import SocialLoginView
 from django.contrib.auth import login as django_login
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,10 +8,17 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from dj_rest_auth.views import PasswordChangeView
 from .serializers import CustomPasswordChangeSerializer
 from rest_framework import status
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
 # authentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
 
 
 class LoginWthPermission(APIView):
