@@ -26,13 +26,18 @@ from dj_rest_auth.views import (
     PasswordChangeView,
 )
 from django.views.generic import TemplateView
-from administrator.auth_views import LoginWthPermission, CustomPasswordChangeView
+from administrator.auth_views import (
+    CustomPasswordChangeView,
+    GoogleLogin,
+    LoginWthPermission,
+)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # ---------- Auth ------------
     path("rest-auth/login/", LoginWthPermission.as_view(), name="login_view"),
+    path("rest-auth/google/", GoogleLogin.as_view(), name="google_login"),
     # Password Change
     path(
         "rest-auth/password/change/",

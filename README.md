@@ -182,3 +182,65 @@ class MyDataView(APIView):
     def post(self, request, *args, **kwargs):
         return Response({"message": "POST response (not gzipped)"})
 ```
+
+## Google sign-in
+
+This boilerplate includes a Google OAuth sign-in endpoint backed by `dj-rest-auth`,
+`django-allauth`, and Simple JWT:
+
+```txt
+POST /rest-auth/google/
+```
+
+### Backend setup
+
+1. Create OAuth credentials in Google Cloud Console:
+   - Application type: Web application
+   - Authorized JavaScript origins: your frontend origin, for example `http://localhost:3000`
+   - Authorized redirect URIs: your frontend callback URL if your frontend uses the OAuth code flow
+
+2. Run migrations from the Django project root:
+
+```bash
+cd server
+python manage.py migrate
+```
+
+3. Configure the Django Site and Google SocialApp in Django admin:
+   - Go to `http://localhost:8000/admin/`
+   - Ensure the `Sites` entry for `SITE_ID = 1` matches your backend domain, for example `localhost:8000`
+   - Add a `Social applications` record:
+     - Provider: `Google`
+     - Name: `Google`
+     - Client id: your Google OAuth client ID
+     - Secret key: your Google OAuth client secret
+     - Sites: move the current site into the selected sites list
+
+### Frontend usage
+
+For a JavaScript frontend, get a Google credential from the Google Identity Services
+SDK and send it to the backend:
+
+```js
+await fetch("http://localhost:8000/rest-auth/google/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    access_token: googleAccessToken,
+    id_token: googleIdToken,
+  }),
+});
+```
+
+The response follows `dj-rest-auth` JWT behavior and returns JWT credentials that
+can be used with the existing API authentication style:
+
+```txt
+Authorization: Bearer <access>
+```
+
+If you use OAuth authorization code flow instead, post `{ "code": "<google-code>" }`
+to the same endpoint and make sure the frontend redirect URI exactly matches the
+Google OAuth client configuration.
