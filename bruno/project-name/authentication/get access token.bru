@@ -1,0 +1,28 @@
+meta {
+  name: get access token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/get-access-token/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNTEwNzk2NiwiaWF0IjoxNzIyNTE1OTY2LCJqdGkiOiI5ODRiNDU5OWY0YmY0YjUwOTk0Mzg2MDUzYzQ4ZGE0MCIsInVzZXJfaWQiOjIxfQ.4vDmyvc9IGjJuGI3cABYGDPmyIVqntB__y_T8Bc4-A4"
+  }
+  // admin
+  // tanimsk5800@gmail.com
+  // user 
+  // ongshaktech@gmail.com
+  // anonymous
+  // anonymous@weardhk.com
+  // wearDHK@#4anonymous
+}
+
+settings {
+  encodeUrl: true
+}

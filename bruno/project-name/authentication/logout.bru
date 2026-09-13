@@ -1,0 +1,15 @@
+meta {
+  name: logout
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}rest-auth/logout/
+  body: json
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

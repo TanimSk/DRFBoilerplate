@@ -1,0 +1,21 @@
+meta {
+  name: submit email
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}rest-auth/password/reset/
+  body: json
+  auth: none
+}
+
+body:json {
+  {    
+      "email_reg": "sktanim5800@gmail.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

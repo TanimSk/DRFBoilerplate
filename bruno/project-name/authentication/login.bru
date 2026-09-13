@@ -1,0 +1,39 @@
+meta {
+  name: login
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}rest-auth/login/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      // admin 
+      "email_reg": "test+owner@gmail.com",
+      "password": "12345678"
+      // student
+  //     "email_reg":"tofaal91522@gmail.com",
+  //     "password": "12345600"
+  }
+}
+
+script:post-response {
+  const response = res.body;
+  
+  if (response.role === "ADMIN") {
+    bru.setVar("accessTokenAdmin", response.access);
+  }
+  
+  if (response.role === "STUDENT") {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

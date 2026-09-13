@@ -1,0 +1,30 @@
+meta {
+  name: google oauth
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}rest-auth/google/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id_token": "PASTE_GOOGLE_ID_TOKEN_HERE"
+  }
+}
+
+script:post-response {
+  const response = res.body;
+
+  if (response.role === "STUDENT") {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
